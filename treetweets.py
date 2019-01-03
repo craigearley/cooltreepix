@@ -1,6 +1,9 @@
 import tweepy
 import json
-import os, random, sys
+import os, random, sys, subprocess
+
+# a file of up to 3072KB can be uploaded to Twitter, max size is rounded down (unit is bytes)
+MAXFILESIZE=3000000
 
 envroot = '/cluster/home/cjearley13/cooltreepix/'
 filepath = envroot + 'credentials.json'
@@ -29,6 +32,12 @@ if not os.listdir(imagedir):
 currentimage = random.choice(os.listdir(imagedir))
 
 imagepath = imagedir + currentimage
+
+imagesize = os.path.getsize(imagepath)
+if (imagesize > MAXFILESIZE):
+	percentage = MAXFILESIZE / imagesize * 100
+	resize_command = '/usr/bin/convert -resize ' + percentage + '% ' + imagepath + ' ' + imagepath
+	subprocess.call(cmd, shell=True)
 
 # Send the tweet.
 api.update_with_media(imagepath, status)
