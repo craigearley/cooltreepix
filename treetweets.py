@@ -1,7 +1,10 @@
 import tweepy
 import json
 
-with open('credentials.json') as data_file:
+envroot = '/cluster/home/cjearley13/cooltreepix/'
+filepath = envroot + 'credentials.json'
+
+with open(filepath) as data_file:
     data = json.load(data_file)
 
 consumer_key = data['consumer_key']
@@ -15,7 +18,8 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 image = "IMAG0245.jpg"
+imagePath = envroot + image
 status = ""
 
 # Send the tweet.
-api.update_with_media(image, status)
+api.update_with_media(imagePath, status)
