@@ -23,6 +23,7 @@ access_token_secret = data['access_token_secret']
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="debug mode", action="store_true")
+parser.add_argument("-i", "--image", help="tweet given image", action="store")
 args = parser.parse_args()
 DEBUG = args.debug
 
@@ -37,9 +38,15 @@ if not os.listdir(imagedir):
 	print("empty directory, get more pictures")
 	sys.exit()
 
-currentimage = random.choice(os.listdir(imagedir))
+if (args.image) and (os.path.isfile(imagedir + args.image)):
+	currentimage = args.image
+else:
+	currentimage = random.choice(os.listdir(imagedir))
 
 imagepath = imagedir + currentimage
+
+if (DEBUG):
+	print(imagepath)
 
 imagesize = os.path.getsize(imagepath)
 if (imagesize > MAXFILESIZE):
@@ -59,4 +66,4 @@ api.update_with_media(imagepath, status)
 
 # store the tweeted image so it isn't repeated
 tweetedimagepath = tweeteddir + currentimage
-os.rename(selectedimagepath,tweetedimagepath)
+os.rename(imagepath,tweetedimagepath)
