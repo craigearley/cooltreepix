@@ -13,13 +13,13 @@ filepath = envroot + 'credentials.json'
 imagedir = envroot + "sources/"
 tweeteddir = envroot + "tweeted/"
 
-with open(filepath) as data_file:
-    data = json.load(data_file)
+with open(filepath) as cred_file:
+    credential = json.load(cred_file)
 
-consumer_key = data['consumer_key']
-consumer_secret =  data['consumer_secret']
-access_token = data['access_token']
-access_token_secret = data['access_token_secret']
+consumer_key = credential['consumer_key']
+consumer_secret =  credential['consumer_secret']
+access_token = credential['access_token']
+access_token_secret = credential['access_token_secret']
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="debug mode", action="store_true")
