@@ -36,8 +36,8 @@ imagepath = imagedir + currentimage
 imagesize = os.path.getsize(imagepath)
 if (imagesize > MAXFILESIZE):
 	percentage = MAXFILESIZE / imagesize * 100
-	resize_command = '/usr/bin/convert -resize ' + percentage + '% ' + imagepath + ' ' + imagepath
-	subprocess.call(cmd, shell=True)
+	resize_command = '/usr/bin/convert -resize ' + str(percentage) + '% ' + imagepath + ' ' + imagepath
+	subprocess.call(resize_command, shell=True)
 
 # Send the tweet.
 api.update_with_media(imagepath, status)
