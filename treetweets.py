@@ -24,6 +24,7 @@ access_token_secret = credential['access_token_secret']
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="debug mode", action="store_true")
 parser.add_argument("-i", "--image", help="tweet given image", action="store")
+parser.add_argument("-s", "--status", help="tweet given status", action="store")
 args = parser.parse_args()
 DEBUG = args.debug
 
@@ -33,6 +34,10 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 status = ""
+if (args.status) and (len(args.status) <= 280):
+	status = args.status
+	if (DEBUG):
+		print(len(status))
 
 if not os.listdir(imagedir):
 	print("empty directory, get more pictures")
@@ -59,6 +64,10 @@ if (imagesize > MAXFILESIZE):
 
 # everything after this should only happen as part of production
 if (DEBUG):
+	print("this would produce the following tweet:\n")
+	print(status)
+	print(imagepath)
+	print("")
 	sys.exit()
 
 # Send the tweet.
