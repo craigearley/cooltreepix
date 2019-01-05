@@ -59,4 +59,4 @@ api.update_with_media(imagepath, status)
 
 # store the tweeted image so it isn't repeated
 tweetedimagepath = tweeteddir + currentimage
-#os.rename(selectedimagepath,tweetedimagepath)
+os.rename(selectedimagepath,tweetedimagepath)
